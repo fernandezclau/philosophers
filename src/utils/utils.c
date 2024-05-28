@@ -25,3 +25,12 @@ long	ft_atoi(char *str)
 	}
 	return (sign * result);
 }
+
+char	*ft_putnbr(int num)
+{
+	char str[10] = "0123456789"
+	
+	if (num > 9)
+		ft_putnbr(num / 10);
+	write(1, str[num % 10], 1);
+}

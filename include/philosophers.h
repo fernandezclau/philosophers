@@ -12,27 +12,28 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
+typedef struct s_philosopher
+{
+        int	id;
+        int	left_fork;
+        int	right_fork;
+	int	is_eating;
+	int	eat_count;
+}               t_philo;
+
 typedef struct s_options
 {
-	int		num_philo;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		num_must_eat;
-	t_philosopher	philo;
+	int	num_philo;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	num_must_eat;
+	t_philo	*philo;
 
 }		t_options;
 
-typedef struct s_philosopher
-{
-	int		id;
-	pthread_t	thread_id;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-}		t_philosopher;
-
 // --------------- THREADS----------------
-void	initialize_params(t_options *opt, char **argv);
+int	initialize_params(t_options *opt, char **argv);
 // ............... TIMINGS ...............
 int	get_time(void);
 // --------- ARGUMENTS VALIDATION --------
