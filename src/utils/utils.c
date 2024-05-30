@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 17:04:48 by claferna          #+#    #+#             */
+/*   Updated: 2024/05/30 17:07:15 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
 long	ft_atoi(char *str)
 {
 	long	sign;
 	long	result;
-	int	i;
+	int		i;
 
 	i = 0;
 	sign = 1;
@@ -28,8 +40,9 @@ long	ft_atoi(char *str)
 
 char	*ft_putnbr(int num)
 {
-	char str[10] = "0123456789"
-	
+	char	str[10];
+
+	str = "0123456789";
 	if (num > 9)
 		ft_putnbr(num / 10);
 	write(1, str[num % 10], 1);

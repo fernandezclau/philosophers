@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 17:04:28 by claferna          #+#    #+#             */
+/*   Updated: 2024/05/30 17:10:56 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
 /*
@@ -53,4 +65,3 @@ void	print_action(int action, t_philo *philo, t_options *opt)
 	}
 	pthread_mutex_unlock(&opt->mtx_writtint);
 }
-

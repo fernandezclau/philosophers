@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/30 17:04:07 by claferna          #+#    #+#             */
+/*   Updated: 2024/05/30 17:08:44 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
 /*
@@ -12,7 +24,7 @@ void	p_sleep(t_options *opt, t_philo *philo)
 /*
 ** DESC: The 'p_eat' function makes a philosopher eat.
 */
-void	p_eat()
+void	p_eat(t_options *opt, t_philo *philo)
 {
 	print_action(EAT, philo, opt);
 }
@@ -20,7 +32,7 @@ void	p_eat()
 /*
 ** DESC: The 'p_think' function makes a philosopher think.
 */
-void	p_think()
+void	p_think(t_options *opt, t_philo *philo)
 {
 	print_action(THINK, philo, opt);
 }
