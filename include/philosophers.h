@@ -14,11 +14,15 @@
 
 typedef struct s_philosopher
 {
-        int	id;
-        int	left_fork;
-        int	right_fork;
-	int	is_eating;
-	int	eat_count;
+        pthread_t		tid;
+	int			id;
+        int			left_fork;
+        int			right_fork;
+	int			is_eating;
+	int			eat_count;
+	uint64_t		time_of_death;
+	pthread_mutex_t		mtx;
+	struct s_options	opt;
 }               t_philo;
 
 typedef struct s_options
@@ -28,7 +32,10 @@ typedef struct s_options
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	num_must_eat;
-	t_philo	*philo;
+	pthread_mutex_t	*mtx_forks;
+	pthread_mutex_t	*mtx;
+	pthread_mutex_t	*mtx_write;
+	t_philo	*philos;
 
 }		t_options;
 
