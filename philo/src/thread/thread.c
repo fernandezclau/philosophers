@@ -1,6 +1,6 @@
 #include "../../include/philosophers.h"
 
-static int	do_join(t_options *opt, pthread_t tid)
+static int	do_join(t_options *opt)
 {
 	int	i;
 
@@ -11,26 +11,15 @@ static int	do_join(t_options *opt, pthread_t tid)
 			return (1);
 		i++;
 	}
-	if (opt->num_must_eat > 0)
-	{
-		if (pthread_join(tid, NULL))
-			return (1);
-	}
 	return (0);
 }
 
 int	start_simulation(t_options *opt)
 {
 	int		i;
-	pthread_t	tid;
 	void		*philo;
 
 	opt->start = get_time();
-	if (opt->num_must_eat > 0)
-	{
-		if (pthread_create(&tid, NULL, &have_eaten, (void *) opt))
-			return (1);
-	}
 	i = 0;
 	while (i < opt->num_philo)
 	{
@@ -40,6 +29,8 @@ int	start_simulation(t_options *opt)
 		usleep(100);
 		i++;
 	}
+	if (opt->num_must_eat > 0 && opt->num_philo > 1)
+		have_eaten(opt);
 	if (opt->num_philo == 1)
 	{
 		pthread_detach(opt->tids[0]);
@@ -47,6 +38,6 @@ int	start_simulation(t_options *opt)
 			usleep(0);
 		return (0);
 	}
-	do_join(opt, tid); 
+	do_join(opt); 
 	return (0);
 }

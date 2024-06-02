@@ -55,7 +55,6 @@ void	*p_lifecycle(void *param)
 	philo->time_of_death = philo->last_meal + philo->opt->time_to_die;
 	if (pthread_create(&tid, NULL, &p_is_dead, param))
 		return (NULL);
-	//pthread_detach(tid);
 	while (philo->opt->dead == 0)
 	{
 		p_take_forks(philo->opt, philo);
