@@ -1,7 +1,7 @@
 
 #include "../include/philosophers_bonus.h"
 
-static void	initializes_semaphores(t_options *opt)
+static int	initializes_semaphores(t_options *opt)
 {
 	sem_unlink("/forks");
 	sem_unlink("/write");
@@ -9,6 +9,9 @@ static void	initializes_semaphores(t_options *opt)
 	opt->forks = sem_open("/forks", O_CREAT, S_IRWXU, opt->num_philo);
 	opt->write = sem_open("/write", O_CREAT, S_IRWXU, 1);
 	opt->eating = sem_open("/eating", O_CREAT, S_IRWXU, 1);
+	if (opt->forks == SEM_FAILED || opt->write == SEM_FAILED || opt->eating == SEM_FAILED)
+        return (0);
+	return (1);
 }
 
 static int	initialize_philosophers(t_options *opt)
@@ -44,7 +47,8 @@ int	initialize_options(t_options *opt, char **argv)
 	opt->num_must_eat = -1;
 	if (argv[5])
 		opt->num_must_eat = ft_atoi(argv[5]);
-	initializes_semaphores(opt);
+	if (!initializes_semaphores(opt))
+		return (0);
 	return (1);
 }
 
