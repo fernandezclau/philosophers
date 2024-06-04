@@ -16,7 +16,7 @@ RM		=	rm -f
 
 SRC		=	./src/main.c \
 			./src/arguments/*.c\
-			./src/threads/*.c\
+			./src/thread/*.c\
 			./src/utils/*.c\
 
 OBJS		=	$(SRC:.c=.o)

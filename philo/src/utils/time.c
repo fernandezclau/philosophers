@@ -15,7 +15,7 @@
 /*
 ** DESC: The 'get_time' function gets the actual time in miliseconds.
 */
-int	get_time(void)
+uint64_t	get_time(void)
 {
 	static struct timeval	tv;
 
