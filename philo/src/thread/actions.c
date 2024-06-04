@@ -6,7 +6,7 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:27:28 by claferna          #+#    #+#             */
-/*   Updated: 2024/06/04 18:27:31 by claferna         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:38:59 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	p_sleep(t_options *opt, t_philo *philo)
 {
 	print_action(SLEEP, philo, opt);
 	pthread_mutex_unlock(&opt->mtx_forks[philo->left_fork]);
-	pthread_mutex_unlock(&opt->mtx_forks[philo->right_fork]);
+	if (opt->num_philo > 1)
+		pthread_mutex_unlock(&opt->mtx_forks[philo->right_fork]);
 	usleep(opt->time_to_sleep * 1000);
 }
 
