@@ -21,9 +21,9 @@ void	p_eat(t_options *opt, t_philo *philo)
 	sem_wait(opt->eating);
 	print_action(EAT, philo, opt);
 	philo->last_meal = get_time();
+	sem_post(opt->eating);
 	usleep(opt->time_to_eat * 1000);
 	philo->count_meals++;
-	sem_post(opt->eating);
 	sem_post(opt->forks);
 	sem_post(opt->forks);
 }

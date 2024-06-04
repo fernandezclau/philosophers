@@ -8,9 +8,9 @@ int		main(int argc, char **argv)
 	if (are_arguments_valid(argc, argv))
 	{
 		if (!initialize_params(&opt, argv))
-			return (1);
+			return (printf("Error\n"), 1);
 		if (!start_simulation(&opt))
-			return (1);
+			return (printf("Error\n"), 1);
 	}
 	else
 		printf("Error in arguments\n");
