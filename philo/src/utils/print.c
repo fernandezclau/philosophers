@@ -6,7 +6,7 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:43:27 by claferna          #+#    #+#             */
-/*   Updated: 2024/06/04 17:45:50 by claferna         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:34:10 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,13 @@ static void	write_timestamp(int start)
 */
 void	print_action(int action, t_philo *philo, t_options *opt)
 {
-	static int	is_dead;
-
-	is_dead = 0;
 	pthread_mutex_lock(&philo->opt->mtx_write);
-	if (!is_dead)
+	if (!opt->dead)
 	{
 		write_timestamp(opt->start);
 		write(1, "\t", 1);
 		if (action != END)
 			ft_putnbr(philo->id + 1);
-		if (action >= DIE)
-			is_dead = 1;
 		write_action(action);
 	}
 	pthread_mutex_unlock(&philo->opt->mtx_write);
