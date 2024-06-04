@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialize_params.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/04 17:07:46 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/04 17:08:47 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
 static int	initialize_philosophers(t_options *opt, int total)
@@ -27,14 +39,15 @@ static int	initialize_philosophers(t_options *opt, int total)
 static int	initialize_mutex(t_options *opt)
 {
 	int	i;
-	
+
 	pthread_mutex_init(&opt->mtx_write, NULL);
 	pthread_mutex_init(&opt->someone_dead, NULL);
 	pthread_mutex_lock(&opt->someone_dead);
-	opt->tids = (pthread_t *)malloc(sizeof(pthread_t) *opt->num_philo);
+	opt->tids = (pthread_t *)malloc(sizeof(pthread_t) * opt->num_philo);
 	if (!opt->tids)
 		return (0);
-	opt->mtx_forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * opt->num_philo);
+	opt->mtx_forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * \
+			opt->num_philo);
 	if (!opt->mtx_forks)
 		return (0);
 	i = 0;

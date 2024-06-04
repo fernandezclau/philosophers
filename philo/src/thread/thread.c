@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/04 17:10:47 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/04 17:11:18 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
 static int	do_join(t_options *opt)
@@ -17,7 +29,7 @@ static int	do_join(t_options *opt)
 int	start_simulation(t_options *opt)
 {
 	int		i;
-	void		*philo;
+	void	*philo;
 
 	opt->start = get_time();
 	i = 0;
@@ -38,6 +50,6 @@ int	start_simulation(t_options *opt)
 			usleep(0);
 		return (0);
 	}
-	do_join(opt); 
+	do_join(opt);
 	return (0);
 }

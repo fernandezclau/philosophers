@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/04 17:09:56 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/04 17:10:33 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
 void	*have_eaten(void	*param)
 {
 	t_options	*opt;
-	int		i;
-	int		count_meals;
+	int			i;
+	int			count_meals;
 
 	opt = (t_options *) param;
 	count_meals = 0;
@@ -15,14 +27,14 @@ void	*have_eaten(void	*param)
 			pthread_mutex_lock(&opt->philos[i++].mtx_eat);
 		count_meals++;
 		if (opt->dead == 1)
-			break;
+			break ;
 	}
 	print_action(END, opt->philos, opt);
 	opt->dead = 1;
 	pthread_mutex_unlock(&opt->someone_dead);
 	return (NULL);
-
 }
+
 static void	*p_is_dead(void *param)
 {
 	t_philo	*philo;

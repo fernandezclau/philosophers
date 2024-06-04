@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/04 17:06:41 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/04 17:07:26 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -21,7 +33,7 @@
 // .......... STRUCTS ...........
 struct	s_options;
 // --------- PHILOSPHER ---------
-typedef struct	s_philosopher
+typedef struct s_philosopher
 {
 	int					id;
 	pthread_t			tid;
@@ -37,7 +49,7 @@ typedef struct	s_philosopher
 }						t_philo;
 
 // ----------- OPTIONS ----------
-typedef struct	s_options
+typedef struct s_options
 {
 	int				num_philo;
 	uint64_t		time_to_die;
@@ -48,7 +60,7 @@ typedef struct	s_options
 	int				dead;
 	pthread_t		*tids;
 	t_philo			*philos;
-	pthread_mutex_t someone_dead;
+	pthread_mutex_t	someone_dead;
 	pthread_mutex_t	*mtx_forks;
 	pthread_mutex_t	mtx_write;
 }		t_options;

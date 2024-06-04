@@ -6,12 +6,15 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:04:48 by claferna          #+#    #+#             */
-/*   Updated: 2024/05/30 17:07:15 by claferna         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:17:01 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philosophers.h"
 
+/*
+** DESC: The 'ft_atoi' function converts a string into a long
+*/
 long	ft_atoi(char *str)
 {
 	long	sign;
@@ -38,16 +41,14 @@ long	ft_atoi(char *str)
 	return (sign * result);
 }
 
+/*
+** DESC: The 'ft_putnbr' function converts a int into a string.
+*/
 void	ft_putnbr(int num)
 {
-<<<<<<< HEAD:src/utils/utils.c
 	char	str[10];
 
 	str = "0123456789";
-=======
-	char str[10] = "0123456789";
-	
->>>>>>> 4b33ababbc76534c4b8b1c6704bb662668f9270d:philo/src/utils/utils.c
 	if (num > 9)
 		ft_putnbr(num / 10);
 	write(1, &str[num % 10], 1);
