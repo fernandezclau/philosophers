@@ -34,7 +34,10 @@ void *have_eaten(void *param)
 		while (opt->num_must_eat != -1 && i < opt->num_philo && philo[i].count_meals >= opt->num_must_eat)
 			i++;
 		if (i == opt->num_philo)
+		{
+			print_action(END, philo, philo->opt);
 			opt->end = 1;
+		}
 		if (opt->dead)
 			break ;
 	}
