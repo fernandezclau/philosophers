@@ -26,11 +26,20 @@ long	ft_atoi(char *str)
 	return (sign * result);
 }
 
-void	ft_putnbr(int num)
+uint64_t	get_time(void)
 {
-	char str[10] = "0123456789";
-	
-	if (num > 9)
-		ft_putnbr(num / 10);
-	write(1, &str[num % 10], 1);
+	static struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void	error_msg(int type)
+{
+	if (type == INIT)
+		printf("Error while initialising... -.-\n");
+	else if (type == ARGS)
+		printf("Error in arguments... :/ ╦╤─\n");
+	else
+		printf("Error starting simulation... ;(\n");
 }

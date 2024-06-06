@@ -2,11 +2,9 @@
 # -------- MAIN VARIABLE  --------
 # --------------------------------
 
-NAME		=	philo.a
-
 CC		=	gcc
 
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror
 
 RM		=	rm -f
 
@@ -14,27 +12,59 @@ RM		=	rm -f
 # ---------- SRC & OBJS -----------
 # ---------------------------------
 
-SRC		=	./src/main.c \
-			./src/arguments/*.c\
-			./src/thread/*.c\
+SRC		=	./src/*.c \
 			./src/utils/*.c\
 
-OBJS		=	$(SRC:.c=.o)
+OBJS	=	$(SRC:.c=.o)
+
+# ---------------------------------
+# --------- FLOWER POWER ----------
+# ---------------------------------
+
+PINK = \033[38;5;217m
+TURQUOISE = \033[38;5;80m
+YELLOW = \033[38;5;229m
+RESET = \033[0m
+
+START = "$(PINK)Compiling $(YELLOW) program...$(RESET)"
+DONE = "$(PINK)Compilation $(TURQUOISE)complete! 🐱$(RESET)"
+VALGRIND = "$(PINK)Running Valgrind...$(RESET)"
+LEAKS = "$(TURQUOISE)[Leak Mode]$(RESET)"
+DATA_RACES = "$(TURQUOISE)[Data Races Mode]$(RESET)"
+CLEAN = "$(PINK)Cleaning $(YELLOW)files...$(RESET)"
+CLEAN_DONE = "$(PINK)Clean $(TURQUOISE)complete! 🐱$(RESET)"
 
 # ---------------------------------
 # ------------ RULES --------------
 # ---------------------------------
+all		:	$(OBJS)
+			@echo " /\\_/\\"
+			@echo "  o.o "
+			@echo " > ^ < "
+			@echo $(START)
+			@$(CC) $(CFLAGS) $(SRC) -o philo
+			@echo $(DONE)
 
-all		:
-			$(CC) $(CFLAGS) $(SRC) -o philo
+clean	:
+			@echo $(CLEAN)
+			@$(RM) $(OBJS)
+			@echo $(CLEAN_DONE)
 
-clean		:
-			$(RM) $(OBJS) 
+fclean	:	clean
+			@$(RM) $(NAME)
+			@$(RM) philo
 
-fclean		:	clean
-			$(RM) $(NAME)
-			$(RM) philo
+leaks	: 	$(OBJS_PHILO)
+			@echo $(VALGRIND)
+			@echo $(LEAKS)
+			valgrind --leak-check=full ./philo 2 10 20 20 2
+
+races	: 	$(OBJS_PHILO)
+			@echo $(VALGRIND)
+			@echo $(DATA_RACES)
+			valgrind --tool=helgrind ./philo 2 100 20 20 2
+
+.PHONY	:	all fclean re clean
 
 re		:	fclean all
 
-.PHONY		:	all fclean re clean

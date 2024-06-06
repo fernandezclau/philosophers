@@ -2,42 +2,30 @@
 # define PHILOSOPHERS_H
 
 // ........... MACROS ...........
+// __________ actions ___________
 # define EAT		1
 # define SLEEP		2
 # define THINK		3
 # define TAKE_FORK	4
 # define DIE		5
-# define END		6
+// ___________ errors ___________
+# define INIT		6
+# define SIM		7
+# define ARGS		8
 
 // ............ LIBS ............
-# include <pthread.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <sys/time.h>
-# include <stdio.h>
-# include <stdint.h>
 # include <limits.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <sys/time.h>
+# include <unistd.h>
+# include <stdint.h>
 
 // .......... STRUCTS ...........
-struct	s_options;
-// --------- PHILOSPHER ---------
-typedef struct	s_philosopher
-{
-	int					id;
-	pthread_t			tid;
-	int					left_fork;
-	int					right_fork;
-	int					is_eating;
-	uint64_t			time_of_death;
-	uint64_t			last_meal;
-	int					eat_count;
-	pthread_mutex_t		mtx;
-	pthread_mutex_t		mtx_eat;
-	struct s_options	*opt;
-}						t_philo;
-
 // ----------- OPTIONS ----------
-typedef struct	s_options
+typedef struct s_options
 {
 	int				num_philo;
 	uint64_t		time_to_die;
@@ -45,30 +33,45 @@ typedef struct	s_options
 	uint64_t		time_to_sleep;
 	int				num_must_eat;
 	uint64_t		start;
-	int				dead;
-	pthread_t		*tids;
-	t_philo			*philos;
-	pthread_mutex_t someone_dead;
-	pthread_mutex_t	*mtx_forks;
+	int				done;
+	int				died;
+	pthread_t		*t_id;
 	pthread_mutex_t	mtx_write;
-}		t_options;
+	pthread_mutex_t	mtx_eat;
+	pthread_mutex_t	mtx_end;
+	pthread_mutex_t	mtx_dead;
+}					t_options;
+// --------- PHILOSPHER ---------
+typedef struct s_philo
+{
+	int				id;
+	uint64_t		last_meal;
+	int				count_eats;
+	int				left_fork;
+	int				right_fork;
+	pthread_mutex_t	*fork;
+	t_options		*opt;
+}					t_philo;
 
-// ----------- OPTIONS -----------
-int			initialize_params(t_options *opt, char **argv);
+// -------- THREADS & MONITORING ----------
+int			start_simulation(t_options *opt, t_philo *philo);
+void		*p_lifecycle(void *arg);
+int			meal_checker(t_options *opt, t_philo *philo);
+void		is_someone_dead(t_options *opt, t_philo *philo);
+void		free_structs(t_options *opt, t_philo *philo);
+void		destroy_mutexes(t_options *opt, t_philo *philo);
+// --------------- ACTIONS ----------------
+int			p_eat(t_philo *philo);
+void		p_sleep(t_philo *philo);
+void    	p_think(t_philo *philo);
+int			take_fork(int a, int b, int take_bigger);
+// ---------------- UTILS -----------------
 int			are_arguments_valid(int argc, char **argv);
-// ----------- THREADS ------------
-int			start_simulation(t_options *opt);
-void		*p_lifecycle(void *param);
-void		*have_eaten(void *param);
-void		destroy_mutexs(t_options *opt);
-// ------------ ACTIONS -----------
-void		p_eat(t_options *opt, t_philo *philo);
-void		p_sleep(t_options *opt, t_philo *philo);
-void		p_think(t_options *opt, t_philo *philo);
-void		p_take_forks(t_options *opt, t_philo *philo);
-// ------------- UTILS ------------
-long		ft_atoi(char *str);
-void		print_action(int action, t_philo *philo, t_options *opt);
+int			initialize_params(t_options **opt, t_philo **philo, char **av);
+void		print_action(t_philo *philo, int action);
+void		error_msg(int type);
+int			is_done(t_philo *philo, int n);
+int			is_dead(t_philo *philo, int n);
 uint64_t	get_time(void);
-void		ft_putnbr(int num);
+long		ft_atoi(char *str);
 #endif
