@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialize_params.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 17:26:33 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/10 17:27:39 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/philosophers.h"
 
 static void	initialize_mutexs(t_options **opt)
@@ -58,6 +70,10 @@ static int	initialize_philosophers(t_philo **philo, t_options *opt)
 	return (1);
 }
 
+/*
+** DESC: The 'initiaize_params' function initializes all the necessary
+** parameter for the simulation to start.
+*/
 int	initialize_params(t_options **opt, t_philo **philo, char **av)
 {
 	*opt = (t_options *)malloc(sizeof(t_options));
@@ -69,4 +85,3 @@ int	initialize_params(t_options **opt, t_philo **philo, char **av)
 		return (0);
 	return (1);
 }
-

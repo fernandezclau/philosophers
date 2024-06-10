@@ -12,8 +12,14 @@ RM		=	rm -f
 # ---------- SRC & OBJS -----------
 # ---------------------------------
 
-SRC		=	./src/*.c \
-			./src/utils/*.c\
+SRC		=	./src/main.c \
+			./src/initialize_params.c\
+			./src/actions.c\
+			./src/routine.c\
+			./src/thread.c\
+			./src/utils/print.c\
+			./src/utils/utils.c\
+			./src/utils/validation.c\
 
 OBJS	=	$(SRC:.c=.o)
 
@@ -57,7 +63,7 @@ fclean	:	clean
 leaks	: 	$(OBJS_PHILO)
 			@echo $(VALGRIND)
 			@echo $(LEAKS)
-			valgrind --leak-check=full ./philo 2 10 20 20 2
+			valgrind --leak-check=full ./philo 1 200 20 20 2
 
 races	: 	$(OBJS_PHILO)
 			@echo $(VALGRIND)

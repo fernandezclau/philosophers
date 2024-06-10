@@ -1,5 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 17:33:13 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/10 17:37:07 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/philosophers.h"
 
+/*
+** DESC: The 'free_structs' function frees all the heap initialiazed
+** memory.
+*/
 void	free_structs(t_options *opt, t_philo *philo)
 {
 	if (philo && philo->fork)
@@ -12,7 +28,10 @@ void	free_structs(t_options *opt, t_philo *philo)
 		free(opt);
 }
 
-void	close_semaphores(t_options *opt, t_philo *philo)
+/*
+** DESC: The 'close_mutex' function closes all the initialized mutex.
+*/
+void	close_mutex(t_options *opt, t_philo *philo)
 {
 	int	i;
 
@@ -25,6 +44,9 @@ void	close_semaphores(t_options *opt, t_philo *philo)
 	pthread_mutex_destroy(&opt->mtx_dead);
 }
 
+/*
+** DESC: The 'start_simulation' function starts the simulation.
+*/
 int	start_simulation(t_options *opt, t_philo *philo)
 {
 	int			i;
@@ -43,10 +65,6 @@ int	start_simulation(t_options *opt, t_philo *philo)
 		if (pthread_join(opt->t_id[i], NULL))
 			return (1);
 		i++;
-	}	
+	}
 	return (0);
 }
-
-
-
-

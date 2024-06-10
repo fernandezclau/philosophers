@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 17:43:43 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/10 17:44:52 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
-int	is_number(char argument)
+static int	is_number(char argument)
 {
 	return (argument >= '0' && argument <= '9');
 }
 
-int	is_argument_numeric(char *argument)
+static int	is_argument_numeric(char *argument)
 {
 	int	i;
 
@@ -18,14 +30,18 @@ int	is_argument_numeric(char *argument)
 	return (1);
 }
 
-int	is_argument_int(char *argument)
+static int	is_argument_int(char *argument)
 {
 	return (ft_atoi(argument) <= INT_MAX && ft_atoi(argument) >= INT_MIN);
 }
 
+/*
+** DESC: The 'are_arguments_valid' function checks if the entered arguments
+** are valid.
+*/
 int	are_arguments_valid(int argc, char **argv)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (argc != 5 && argc != 6)

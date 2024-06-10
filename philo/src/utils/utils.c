@@ -1,10 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 17:45:07 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/10 17:46:45 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/philosophers.h"
 
+/*
+** DESC: The 'ft_atoi' function converts a string to int.
+*/
 long	ft_atoi(char *str)
 {
 	long	sign;
 	long	result;
-	int	i;
+	int		i;
 
 	i = 0;
 	sign = 1;
@@ -26,6 +41,9 @@ long	ft_atoi(char *str)
 	return (sign * result);
 }
 
+/*
+** DESC: The 'get_time' function gets the current time in ms.
+*/
 uint64_t	get_time(void)
 {
 	static struct timeval	tv;
@@ -34,6 +52,9 @@ uint64_t	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+/*
+** DESC: The 'error_msg' function handles the error messages.
+*/
 void	error_msg(int type)
 {
 	if (type == INIT)

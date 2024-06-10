@@ -1,6 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routine.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/10 17:29:04 by claferna          #+#    #+#             */
+/*   Updated: 2024/06/10 17:32:55 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
+/*
+** DESC: The 'p_lifecycle' function simulates the whole lifecycle of a
+** philosopher.
+*/
 void	*p_lifecycle(void *arg)
 {
 	t_philo	*philo;
@@ -14,8 +29,10 @@ void	*p_lifecycle(void *arg)
 			break ;
 		if (is_done(philo, 0))
 		{
-			pthread_mutex_unlock(&philo->fork[take_fork(philo->left_fork, philo->right_fork, 1)]);
-			pthread_mutex_unlock(&philo->fork[take_fork(philo->left_fork, philo->right_fork, 0)]);
+			pthread_mutex_unlock(&philo->fork[take_fork(philo->left_fork, \
+					philo->right_fork, 1)]);
+			pthread_mutex_unlock(&philo->fork[take_fork(philo->left_fork, \
+					philo->right_fork, 0)]);
 			break ;
 		}
 		p_sleep(philo);
@@ -24,6 +41,9 @@ void	*p_lifecycle(void *arg)
 	return (NULL);
 }
 
+/*
+** DESC: The 'meal_checker' function checks if all the philosohers have eaten.
+*/
 int	meal_checker(t_options *opt, t_philo *philo)
 {
 	int	i;
@@ -48,6 +68,9 @@ int	meal_checker(t_options *opt, t_philo *philo)
 	return (0);
 }
 
+/*
+** DESC: The 'is_someone_dead' function checks if a philosopher is dead.
+*/
 void	is_someone_dead( t_options *opt, t_philo *philo)
 {
 	int			i;
@@ -64,7 +87,7 @@ void	is_someone_dead( t_options *opt, t_philo *philo)
 			is_done(philo, 1);
 			break ;
 		}
-		if (last_meal && get_time() - last_meal > opt->time_to_die )
+		if (last_meal && get_time() - last_meal > opt->time_to_die)
 		{
 			is_dead(philo, 1);
 			print_action(&philo[i], DIE);
