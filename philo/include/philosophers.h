@@ -59,7 +59,7 @@ void		*p_lifecycle(void *arg);
 int			meal_checker(t_options *opt, t_philo *philo);
 void		is_someone_dead(t_options *opt, t_philo *philo);
 void		free_structs(t_options *opt, t_philo *philo);
-void		destroy_mutexes(t_options *opt, t_philo *philo);
+void		close_semaphores(t_options *opt, t_philo *philo);
 // --------------- ACTIONS ----------------
 int			p_eat(t_philo *philo);
 void		p_sleep(t_philo *philo);

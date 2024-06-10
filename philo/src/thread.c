@@ -12,7 +12,7 @@ void	free_structs(t_options *opt, t_philo *philo)
 		free(opt);
 }
 
-void	destroy_mutexes(t_options *opt, t_philo *philo)
+void	close_semaphores(t_options *opt, t_philo *philo)
 {
 	int	i;
 

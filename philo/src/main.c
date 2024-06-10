@@ -10,9 +10,9 @@ int	main(int argc, char **argv)
 		if (!initialize_params(&opt, &philo, argv))
 			return (free_structs(opt, philo), error_msg(INIT), 1);
 		if (start_simulation(opt, philo))
-			return (destroy_mutexes(opt, philo), free_structs(opt, philo), \
+			return (close_semaphores(opt, philo), free_structs(opt, philo), \
 			error_msg(-1), 1);
-		return (destroy_mutexes(opt, philo), free_structs(opt, philo), 0);
+		return (close_semaphores(opt, philo), free_structs(opt, philo), 0);
 	}
 	else
 		return (error_msg(ARGS), 1);
