@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: claferna <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/10 18:04:15 by claferna          #+#    #+#              #
+#    Updated: 2024/06/10 18:04:28 by claferna         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # --------------------------------
 # -------- MAIN VARIABLE  --------
 # --------------------------------
@@ -63,12 +75,12 @@ fclean	:	clean
 leaks	: 	$(OBJS_PHILO)
 			@echo $(VALGRIND)
 			@echo $(LEAKS)
-			valgrind --leak-check=full ./philo 1 200 20 20 2
+			valgrind --leak-check=full ./philo 2 10 20 20 2
 
 races	: 	$(OBJS_PHILO)
 			@echo $(VALGRIND)
 			@echo $(DATA_RACES)
-			valgrind --tool=helgrind ./philo 2 100 20 20 2
+			valgrind --tool=helgrind ./philo 2 10 20 20 2
 
 .PHONY	:	all fclean re clean
 
