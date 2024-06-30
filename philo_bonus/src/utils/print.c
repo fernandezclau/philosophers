@@ -1,47 +1,69 @@
-#include "../../include/philosophers_bonus.h"
-
-void    write_action(int action)
-{
-        if (action == EAT)
-                printf(" is eating\n");
-        else if (action == SLEEP)
-                printf(" is sleeping\n");
-        else if (action == THINK)
-                printf(" is thinking\n");
-        else if (action == TAKE_FORK)
-                printf(" has taken a fork\n");
-        else if (action == END)
-        	printf("The number of meals has been reached");
-	else
-                printf(" died\n");
-}
+#include "../../include/philosophers.h"
 
 static void    write_timestamp(int start)
 {
         int     timestamp;
 
         timestamp = get_time() - start;
-        ft_putnbr(timestamp);
-        write(1, "\t", 1);
+        printf("%u\t", timestamp);
 }
 
-/*
-** DESC: The 'print_action' function logs the actio of a certain
-** philosopher with timestamps.
-*/
-void    print_action(int action, t_philo *philo, t_options *opt)
+static void    write_action(int action)
 {
-        static int      is_dead = 0;
+    if (action == EAT)
+        printf(" is eating\n");
+    else if (action == SLEEP)
+        printf(" is sleeping\n");
+    else if (action == THINK)
+        printf(" is thinking\n");
+    else if (action == TAKE_FORK)
+        printf(" has taken a fork\n");
+	else
+		printf(" died\n");
+}
 
-        sem_wait(opt->write);
-        if (!is_dead)
-        {
-                write_timestamp(opt->start);
-                if (action != END)
-                        ft_putnbr(philo->id + 1);
-                if (action >= DIE)
-                        is_dead = 1;
-                write_action(action);
-        }
-        sem_post(opt->write);
+void	print_action(t_philo *philo, int action)
+{
+	pthread_mutex_lock(&philo->opt->mtx_write);
+	if (action == DIE)
+	{
+		write_timestamp(philo->opt->start);
+		printf("%d", philo->id + 1);
+		write_action(action);	
+	}
+	if (!is_dead(philo, 0) && !is_done(philo, 0))
+	{
+		write_timestamp(philo->opt->start);
+		printf("%d", philo->id + 1);
+		write_action(action);	
+	}
+	pthread_mutex_unlock(&philo->opt->mtx_write);
+}
+
+int	is_dead(t_philo *philo, int is_dead)
+{
+	pthread_mutex_lock(&philo->opt->mtx_dead);
+	if (is_dead)
+		philo->opt->died = 1;
+	if (philo->opt->died)
+	{
+		pthread_mutex_unlock(&philo->opt->mtx_dead);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->opt->mtx_dead);
+	return (0);
+}
+
+int	is_done(t_philo *philo, int is_dead)
+{
+	pthread_mutex_lock(&philo->opt->mtx_end);
+	if (is_dead)
+		philo->opt->done = 1;
+	if (philo->opt->done)
+	{
+		pthread_mutex_unlock(&philo->opt->mtx_end);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->opt->mtx_end);
+	return (0);
 }

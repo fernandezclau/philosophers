@@ -1,4 +1,4 @@
-#include "../include/philosophers_bonus.h"
+#include "../../include/philosophers.h"
 
 int	is_number(char argument)
 {

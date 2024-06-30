@@ -1,18 +1,20 @@
+#include "../include/philosophers.h"
 
-#include "../include/philosophers_bonus.h"
-
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_options	opt;
-	
+	t_options	*opt;
+	t_philo		*philo;
+
 	if (are_arguments_valid(argc, argv))
 	{
-		if (!initialize_params(&opt, argv))
-			return (printf("Error\n"), 1);
-		if (!start_simulation(&opt))
-			return (printf("Error\n"), 1);
+		if (!initialize_params(&opt, &philo, argv))
+			return (free_structs(opt, philo), error_msg(INIT), 1);
+		if (start_simulation(opt, philo))
+			return (close_semaphores(opt, philo), free_structs(opt, philo), \
+			error_msg(-1), 1);
+		return (close_semaphores(opt, philo), free_structs(opt, philo), 0);
 	}
 	else
-		printf("Error in arguments\n");
-	return (0);
+		return (error_msg(ARGS), 1);
 }
+

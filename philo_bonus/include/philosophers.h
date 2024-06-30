@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 17:14:58 by claferna          #+#    #+#             */
-/*   Updated: 2024/06/10 17:37:35 by claferna         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
@@ -71,11 +59,11 @@ void		*p_lifecycle(void *arg);
 int			meal_checker(t_options *opt, t_philo *philo);
 void		is_someone_dead(t_options *opt, t_philo *philo);
 void		free_structs(t_options *opt, t_philo *philo);
-void		close_mutex(t_options *opt, t_philo *philo);
+void		close_semaphores(t_options *opt, t_philo *philo);
 // --------------- ACTIONS ----------------
 int			p_eat(t_philo *philo);
 void		p_sleep(t_philo *philo);
-void		p_think(t_philo *philo);
+void    	p_think(t_philo *philo);
 int			take_fork(int a, int b, int take_bigger);
 // ---------------- UTILS -----------------
 int			are_arguments_valid(int argc, char **argv);

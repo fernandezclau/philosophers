@@ -1,37 +1,50 @@
-#include "../include/philosophers_bonus.h"
+#include "../include/philosophers.h"
 
-/*
-** DESC: The 'p_sleep' function makes a philosopher sleep.
-*/
-void	p_sleep(t_options *opt, t_philo *philo)
+int	take_fork(int a, int b, int take_bigger)
 {
-	print_action(SLEEP, philo, opt);
-	usleep(opt->time_to_sleep * 1000);
+	if (take_bigger)
+	{
+		if (a > b)
+			return (a);
+		return (b);
+	}
+	if (a < b)
+		return (a);
+	return (b);
 }
 
-/*
-** DESC: The 'p_eat' function makes a philosopher eat.
-*/
-void	p_eat(t_options *opt, t_philo *philo)
+void    p_think(t_philo *philo)
 {
-	sem_wait(opt->forks);
-	print_action(TAKE_FORK, philo, opt);
-	sem_wait(opt->forks);
-	print_action(TAKE_FORK, philo, opt);
-	sem_wait(opt->eating);
-	print_action(EAT, philo, opt);
-	philo->last_meal = get_time();
-	sem_post(opt->eating);
-	usleep(opt->time_to_eat * 1000);
-	philo->count_meals++;
-	sem_post(opt->forks);
-	sem_post(opt->forks);
+    print_action(philo, THINK);
 }
 
-/*
-** DESC: The 'p_think' function makes a philosopher think.
-*/
-void	p_think(t_options *opt, t_philo *philo)
+void	p_sleep(t_philo *philo)
 {
-	print_action(THINK, philo, opt);
+	pthread_mutex_unlock(&philo->fork[take_fork(philo->left_fork, philo->right_fork, 1)]);
+	pthread_mutex_unlock(&philo->fork[take_fork(philo->left_fork, philo->right_fork, 0)]);
+	print_action(philo, SLEEP);
+	usleep(philo->opt->time_to_sleep * 1000);
 }
+
+int	p_eat(t_philo *p)
+{
+	pthread_mutex_lock(&p->fork[take_fork(p->left_fork, p->right_fork, 0)]);
+	print_action(p, TAKE_FORK);
+	if (p->left_fork == p->right_fork)
+	{
+		pthread_mutex_unlock(&p->fork[take_fork(p->left_fork, \
+				p->right_fork, 0)]);
+		return (1);
+	}
+	pthread_mutex_lock(&p->fork[take_fork(p->left_fork, p->right_fork, 1)]);
+	print_action(p, TAKE_FORK);
+	pthread_mutex_lock(&p->opt->mtx_eat);
+	p->last_meal = get_time();
+	p->count_eats++;
+	pthread_mutex_unlock(&p->opt->mtx_eat);
+    print_action(p, EAT);
+    usleep(p->opt->time_to_eat * 1000);
+    return (0);
+}
+
+
