@@ -4,9 +4,18 @@ static void	take_one_fork(int id, t_philo *philo);
 
 void    take_forks(t_philo *philo)
 {
-    take_one_fork(LEFT_FORK, philo);
-		if (philo->left_taken && philo->opt->num_philo > 1)
-			take_one_fork(RIGHT_FORK, philo);
+	if (philo->right_fork->id < philo->left_fork->id)
+    {
+        take_one_fork(RIGHT_FORK, philo);
+		if (philo->opt->num_philo > 1)
+        	take_one_fork(LEFT_FORK, philo);
+    }
+    else
+    {
+        take_one_fork(LEFT_FORK, philo);
+		if (philo->opt->num_philo > 1)
+        	take_one_fork(RIGHT_FORK, philo);
+    }
 }
 
 void	finish_eating(int id, t_philo *philo)

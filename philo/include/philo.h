@@ -32,6 +32,7 @@
 // ----------- FORK ----------
 typedef struct s_fork
 {
+	int id;
 	pthread_mutex_t	fork_mutex;
 }					t_fork;
 // ----------- OPTIONS ----------
@@ -75,8 +76,9 @@ void	*p_die(t_philo *philo, t_options *opt);
 void	finish_eating(int id, t_philo *philo);
 void    take_forks(t_philo *philo);
 // ---------------- UTILS -----------------
-int		initialize_philosophers(t_options *g, t_philo **philos, t_fork **forks);
+int		initialize_philosophers(t_options *g, t_philo **philos, t_fork *forks);
 int		initialize_options(t_options *opt, char **argv);
+bool forks_init(t_fork **forks, int n_philo);
 uint64_t	get_time(void);
 int		free_all(t_options *g, t_philo *philo, t_fork *forks);
 void	write_timestamp(int start);

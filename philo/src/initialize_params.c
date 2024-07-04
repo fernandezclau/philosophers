@@ -1,13 +1,29 @@
 #include "philo.h"
 
-int	initialize_philosophers(t_options *opt, t_philo **philos, t_fork **forks)
+bool forks_init(t_fork **forks, int n_philo)
+{
+    int i;
+
+    *forks = (t_fork *)malloc(sizeof(t_fork) * n_philo);
+    if (!*forks)
+        return (false);
+    i = -1;
+    while (++i < n_philo)
+    {
+        (*forks)[i].id = i;
+        if (pthread_mutex_init(&((*forks)[i].fork_mutex), NULL))
+            return (false);
+    }
+    return (true);
+}
+
+int	initialize_philosophers(t_options *opt, t_philo **philos, t_fork *forks)
 {
 	t_philo	*philo;
 	int		i;
 
 	*philos = (t_philo *)malloc(sizeof(t_philo) * opt->num_philo);
-	*forks = (t_fork *)malloc(sizeof(t_fork) * opt->num_philo);
-	if (!philos || !forks)
+	if (!philos)
 		return (false);
 	i = -1;
 	while (++i < opt->num_philo)
@@ -17,13 +33,11 @@ int	initialize_philosophers(t_options *opt, t_philo **philos, t_fork **forks)
 		philo->id = i + 1;
 		philo->last_meal = get_time();
 		philo->count_meals = 0;
-		philo->right_fork = &((*forks)[i]);
-		philo->left_fork = &((*forks)[i + 1]);
-		if (philo->id == opt->num_philo)
-			philo->left_fork = &((*forks)[0]);
+		philo->right_fork = &forks[i];
+		philo->left_fork = &forks[(i + 1) % opt->num_philo];
 		philo->right_taken = 0;
 		philo->left_taken = 0;
-		pthread_mutex_init(&(philo->left_fork->fork_mutex), NULL);
+		//pthread_mutex_init(&(philo->left_fork->fork_mutex), NULL);
 	}
 	return (true);
 }
@@ -37,6 +51,8 @@ int	initialize_options(t_options *opt, char **argv)
 	opt->num_must_eat = -2;
 	if (argv[5])
 		opt->num_must_eat = ft_atoi(argv[5]);
+	if (opt->num_philo > 200)
+		return (0);
 	opt->start = get_time();
 	opt->is_someone_dead = false;
 	if (pthread_mutex_init(&(opt->mtx_eat), NULL))

@@ -10,7 +10,9 @@ int	main(int argc, char **argv)
 	{
 		if (!initialize_options(&opt, argv))
 			return (free_all(&opt, philos, forks), (error_msg(INIT), 1));
-		if (!initialize_philosophers(&opt, &philos, &forks))
+		if (!forks_init(&forks, opt.num_philo))
+        	return (free_all(&opt, philos, forks), (error_msg(INIT), 1));
+		if (!initialize_philosophers(&opt, &philos, forks))
 			return (free_all(&opt, philos, forks), (error_msg(INIT), 1));
 		if (!start_simulation(&opt, &philos))
 			return (free_all(&opt, philos, forks), (error_msg(SIM), 1));
