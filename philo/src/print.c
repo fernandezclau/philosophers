@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize_params.c                                :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 17:26:33 by claferna          #+#    #+#             */
-/*   Updated: 2024/06/10 17:27:39 by claferna         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:12:12 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	write_action(int action);
 
-void    print_action(t_philo *philo, int action)
+void	print_action(t_philo *philo, int action)
 {
-    pthread_mutex_lock(&(philo->opt->mtx_write));
+	pthread_mutex_lock(&(philo->opt->mtx_write));
 	if (action == DIE)
 	{
 		write_timestamp(philo->opt->start);
@@ -26,7 +26,7 @@ void    print_action(t_philo *philo, int action)
 	{
 		write_timestamp(philo->opt->start);
 		printf("%d", philo->id);
-        write_action(action);
+		write_action(action);
 	}
 	pthread_mutex_unlock(&(philo->opt->mtx_write));
 }

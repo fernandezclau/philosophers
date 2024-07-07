@@ -1,28 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/07 18:08:13 by claferna          #+#    #+#             */
+/*   Updated: 2024/07/07 18:09:42 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	take_one_fork(int id, t_philo *philo);
 
-void    take_forks(t_philo *philo)
+void	take_forks(t_philo *philo)
 {
 	if (philo->right_fork->id < philo->left_fork->id)
-    {
-        take_one_fork(RIGHT_FORK, philo);
+	{
+		take_one_fork(RIGHT_FORK, philo);
 		if (philo->opt->num_philo > 1)
-        	take_one_fork(LEFT_FORK, philo);
-    }
-    else
-    {
-        take_one_fork(LEFT_FORK, philo);
+			take_one_fork(LEFT_FORK, philo);
+	}
+	else
+	{
+		take_one_fork(LEFT_FORK, philo);
 		if (philo->opt->num_philo > 1)
-        	take_one_fork(RIGHT_FORK, philo);
-    }
+			take_one_fork(RIGHT_FORK, philo);
+	}
 }
 
 void	finish_eating(int id, t_philo *philo)
 {
 	t_fork	*fork;
 	bool	*status;
-	(void) id;
 
 	if (id == LEFT_FORK)
 	{

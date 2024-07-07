@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initialize_params.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/07 18:09:53 by claferna          #+#    #+#             */
+/*   Updated: 2024/07/07 18:11:05 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-bool forks_init(t_fork **forks, int n_philo)
+bool	forks_init(t_fork **forks, int n_philo)
 {
-    int i;
+	int	i;
 
-    *forks = (t_fork *)malloc(sizeof(t_fork) * n_philo);
-    if (!*forks)
-        return (false);
-    i = -1;
-    while (++i < n_philo)
-    {
-        (*forks)[i].id = i;
-        if (pthread_mutex_init(&((*forks)[i].fork_mutex), NULL))
-            return (false);
-    }
-    return (true);
+	*forks = (t_fork *)malloc(sizeof(t_fork) * n_philo);
+	if (!*forks)
+		return (false);
+	i = -1;
+	while (++i < n_philo)
+	{
+		(*forks)[i].id = i;
+		if (pthread_mutex_init(&((*forks)[i].fork_mutex), NULL))
+			return (false);
+	}
+	return (true);
 }
 
 int	initialize_philosophers(t_options *opt, t_philo **philos, t_fork *forks)
@@ -37,7 +49,6 @@ int	initialize_philosophers(t_options *opt, t_philo **philos, t_fork *forks)
 		philo->left_fork = &forks[(i + 1) % opt->num_philo];
 		philo->right_taken = 0;
 		philo->left_taken = 0;
-		//pthread_mutex_init(&(philo->left_fork->fork_mutex), NULL);
 	}
 	return (true);
 }

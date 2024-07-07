@@ -6,7 +6,7 @@ NAME 		=	philo
 
 CC			=	gcc
 
-CFLAGS 		:= -g -Wall -Wextra -Werror -pthread #-fsanitize=thread
+CFLAGS 		:= -g -Wall -Wextra -Werror -pthread -fsanitize=thread
 
 RM			=	rm -rf
 

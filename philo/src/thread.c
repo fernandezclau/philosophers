@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/07 18:12:40 by claferna          #+#    #+#             */
+/*   Updated: 2024/07/07 18:12:53 by claferna         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	*p_lifecycle(void *arg);
@@ -92,5 +104,3 @@ int	is_someone_dead(t_philo *philo)
 	pthread_mutex_unlock(&(philo->opt->mtx_dead));
 	return (state);
 }
-
-
